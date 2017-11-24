@@ -1,0 +1,17 @@
+<%= form_for :task_filter, url: task_filter_path do |f| %>
+    <div>
+      <%= f.label :priority, (I18n.t 'priority' ) %>
+      <%= f.select :priority_condition, Task::FILTER_CONDITION %>
+      <%= f.select :priority, Task::PRIORITY_HASH %>
+    </div>
+
+    <div>
+      <%= f.label :status, (I18n.t 'status' ) %>
+      <%= f.select :status_condition, Task::FILTER_CONDITION %>
+      <%= f.select :status, Task::STATUS_HASH %>
+    </div>
+
+    <div>
+      <%= f.submit (I18n.t 'filter' ) %>
+    </div>
+<% end %>

@@ -1,21 +1,50 @@
 <h1>Tasks list </h1>
-<table>
-  <tr>
-    <th>#</th>
-    <th><%= I18n.t 'content' %></th>
-    <th><%= I18n.t 'priority' %></th>
-    <th><%= I18n.t 'status' %></th>
-    <th><%= I18n.t 'deadline' %></th>
-  </tr>
-  <% @tasks.each_with_index do |task, index| %>
-  <tr>
-    <td><%= index + 1%></td>
-    <td><%= task.content %></td>
-    <td><%= Task::PRIORITY_HASH.key(task.priority) %></td>
-    <td><%= Task::STATUS_HASH.key(task.status) %></td>
-    <td><%= task.deadline %></td>
-    <td><%= link_to I18n.t 'deadline', task%></td>
-  </tr>
-  <% end %>
-</table>
+<%= render 'tasks/search_form' %>
+<div>
+  <span>Sort by deadline</span>
+  <select size="1" name="links" onchange="window.location.href=this.value;">
+    <% if @sorts[:deadline] == 'ASC' %>
+      <option selected = "selected" value="<%= tasks_path(deadline_sort: 'ASC') %>">ASC</option>
+      <option value="<%= tasks_path(deadline_sort: 'DESC') %>">DESC</option>
+    <% else %>
+        <option value="<%= tasks_path(deadline_sort: 'ASC') %>">ASC</option>
+        <option selected = "selected" value="<%= tasks_path(deadline_sort: 'DESC') %>">DESC</option>
+    <% end %>
+  </select>
+
+  <span>Sort by priority</span>
+    <select size="1" name="links" onchange="window.location.href=this.value;">
+      <% if @sorts[:priority] == 'ASC' %>
+        <option selected = "selected" value="<%= tasks_path(priority_sort: 'ASC') %>">ASC</option>
+        <option value="<%= tasks_path(priority_sort: 'DESC') %>">DESC</option>
+      <% else %>
+        <option value="<%= tasks_path(priority_sort: 'ASC') %>">ASC</option>
+        <option selected = "selected" value="<%= tasks_path(priority_sort: 'DESC') %>">DESC</option>
+      <% end %>
+    </select>
+</div>
+<% if @tasks.empty? %>
+    <p>no tasks found </p>
+<% else %>
+  <table>
+    <tr>
+      <th>#</th>
+      <th><%= I18n.t 'content' %></th>
+      <th><%= I18n.t 'priority' %></th>
+      <th><%= I18n.t 'status' %></th>
+      <th><%= I18n.t 'deadline' %></th>
+    </tr>
+    <% @tasks.each_with_index do |task, index| %>
+    <tr>
+      <td><%= index + 1%></td>
+      <td><%= task.content %></td>
+      <td><%= Task::PRIORITY_HASH.key(task.priority) %></td>
+      <td><%= Task::STATUS_HASH.key(task.status) %></td>
+      <td><%= task.deadline %></td>
+      <td><%= link_to (I18n.t 'detail'), task%></td>
+    </tr>
+    <% end %>
+  </table>
+<% end %>
+<%= paginate @tasks %>
 <%= link_to (I18n.t 'create_new_task'), new_task_path %>

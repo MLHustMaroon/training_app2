@@ -33,6 +33,7 @@ gem 'pg'
 gem 'bootstrap-sass'
 gem 'jquery-rails'
 gem 'rails-i18n'
+gem 'kaminari'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
