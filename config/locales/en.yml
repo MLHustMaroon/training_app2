@@ -42,6 +42,7 @@ en:
   detail: 'detail'
   update: 'update'
   confirm_delete: 'are you sure?'
+  new_task: 'New task'
   date:
     formats:
       # Use the strftime parameters for formats.
