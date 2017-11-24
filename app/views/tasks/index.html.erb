@@ -1,0 +1,21 @@
+<h1>Tasks list </h1>
+<table>
+  <tr>
+    <th>#</th>
+    <th><%= I18n.t 'content' %></th>
+    <th><%= I18n.t 'priority' %></th>
+    <th><%= I18n.t 'status' %></th>
+    <th><%= I18n.t 'deadline' %></th>
+  </tr>
+  <% @tasks.each_with_index do |task, index| %>
+  <tr>
+    <td><%= index + 1%></td>
+    <td><%= task.content %></td>
+    <td><%= Task::PRIORITY_HASH.key(task.priority) %></td>
+    <td><%= Task::STATUS_HASH.key(task.status) %></td>
+    <td><%= task.deadline %></td>
+    <td><%= link_to I18n.t 'deadline', task%></td>
+  </tr>
+  <% end %>
+</table>
+<%= link_to (I18n.t 'create_new_task'), new_task_path %>
