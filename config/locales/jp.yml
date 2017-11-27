@@ -36,3 +36,4 @@ jp:
     am: "午前"
     pm: "午後"
   filter: "フィルタ"
+  tags: タグ

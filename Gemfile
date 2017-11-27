@@ -34,6 +34,7 @@ gem 'bootstrap-sass'
 gem 'jquery-rails'
 gem 'rails-i18n'
 gem 'kaminari'
+gem 'rails4-autocomplete'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 

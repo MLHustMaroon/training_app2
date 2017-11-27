@@ -2,13 +2,18 @@
     <div>
       <%= f.label :priority, (I18n.t 'priority' ) %>
       <%= f.select :priority_condition, Task::FILTER_CONDITION %>
-      <%= f.select :priority, Task::PRIORITY_HASH %>
+      <%= f.select :priority, Task::PRIORITY_HASH, include_blank: true %>
     </div>
 
     <div>
       <%= f.label :status, (I18n.t 'status' ) %>
       <%= f.select :status_condition, Task::FILTER_CONDITION %>
-      <%= f.select :status, Task::STATUS_HASH %>
+      <%= f.select :status, Task::STATUS_HASH, include_blank: true %>
+    </div>
+
+    <div>
+      <%= f.label :tags, (I18n.t 'tags') %>
+      <%= f.text_field :tags, placeholder: 'tag1, tag2, ...' %>
     </div>
 
     <div>

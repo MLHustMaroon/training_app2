@@ -3,7 +3,7 @@
 <div>
   <span>Sort by deadline</span>
   <select size="1" name="links" onchange="window.location.href=this.value;">
-    <% if @sorts[:deadline] == 'ASC' %>
+    <% if defined? @sorts[:deadline] && @sorts[:deadline] == 'ASC' %>
       <option selected = "selected" value="<%= tasks_path(deadline_sort: 'ASC') %>">ASC</option>
       <option value="<%= tasks_path(deadline_sort: 'DESC') %>">DESC</option>
     <% else %>
@@ -14,7 +14,7 @@
 
   <span>Sort by priority</span>
     <select size="1" name="links" onchange="window.location.href=this.value;">
-      <% if @sorts[:priority] == 'ASC' %>
+      <% if defined? @sorts[:priority] && @sorts[:priority] == 'ASC' %>
         <option selected = "selected" value="<%= tasks_path(priority_sort: 'ASC') %>">ASC</option>
         <option value="<%= tasks_path(priority_sort: 'DESC') %>">DESC</option>
       <% else %>

@@ -3,7 +3,12 @@
 <div><%= I18n.t 'priority'%>: <%= Task::PRIORITY_HASH.key(@task.priority) %></div>
 <div><%= I18n.t 'status' %>: <%= Task::STATUS_HASH.key(@task.status) %></div>
 <div><%= I18n.t 'deadline' %>: <%= @task.deadline %></div>
+<div><%= I18n.t 'tags' %>:
+  <% @task.tags.each do |tag| %>
+      <%= link_to tag.label, tasks_path(tag: tag.label) %>
+  <% end %>
+</div>
 <div>
-  <%= link_to I18n.t 'edit', edit_task_path(@task) %>
-  <%= link_to I18n.t 'delete', task_path(@task), method: 'delete', data: {confirm: (I18n.t 'confirm_delete')}%>
+  <%= link_to (I18n.t 'edit'), edit_task_path(@task) %>
+  <%= link_to (I18n.t 'delete'), task_path(@task), method: 'delete', data: {confirm: (I18n.t 'confirm_delete')}%>
 </div>

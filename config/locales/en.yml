@@ -72,5 +72,6 @@ en:
     am: "am"
     pm: "pm"
   filter: 'filter'
+  tags: 'tags'
 
 
