@@ -1,4 +1,5 @@
 class UsersController < ApplicationController
+  before_action :correct_user, only: [:edit, :update]
 
   def index
     @users = User.all
@@ -36,16 +37,15 @@ class UsersController < ApplicationController
     end
   end
 
-  def destroy
-    user = User.find params[:id]
-    if user.destroy
-      redirect_to admin_users_path
-    else
-      flash.now[danger] = 'can not delete user'
-      redirect_to admin_user_path user
+  private
+
+  def correct_user
+    user = User.find(params[:id])
+    unless user == current_user
+      flash.now[:danger] = 'you dont have permission to access this site'
+      redirect_to root_path
     end
   end
-
   def user_params
     params.require(:user).permit(:name, :email, :password, :password_confirmation)
   end

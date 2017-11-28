@@ -1,9 +1,7 @@
 class TasksController < ApplicationController
   include TasksHelper
   before_action :correct_user, only: [ :edit, :update, :destroy, :show ]
-  before_action :loggedin, only: [:new, :create]
-
-  autocomplete :tag, :label
+  before_action :loggedin, only: [:new, :create, :index]
 
   def new
     @task = current_user.tasks.build
