@@ -1,3 +1,4 @@
+<%= render 'shared/task_filter_form', url: admin_tasks_path %>
 <% if @tasks.empty? %>
 <p>there is no task</p>
 <% else %>
@@ -21,4 +22,5 @@
         </tr>
       <% end %>
     </table>
+    <%= paginate @tasks %>
 <% end %>

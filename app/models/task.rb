@@ -5,6 +5,7 @@ class Task < ApplicationRecord
   STATUS_HASH = {not_started: 1, undertaken: 2, completed: 3}
   PRIORITY_HASH = {low: 1, normal: 2, high: 3, urgent: 4, immidiate: 5}
   FILTER_CONDITION = {is: 1, is_not: 2}
+  SORT_OPTIONS = {by_prioirity: 1, by_status: 2}
 
   belongs_to :user
   has_and_belongs_to_many :tags

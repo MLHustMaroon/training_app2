@@ -6,6 +6,7 @@
 
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 </head>
 
 <div class="header">
@@ -16,7 +17,14 @@
 </div>
 
 <div class="main-content">
-  <%= yield %>
+  <% if is_admin? %>
+      <%= render 'layouts/admin_sidebar' %>
+  <% elsif logged_in? && !current_user.admin? %>
+      <%= render 'layouts/user_sidebar' %>
+  <% end %>
+  <div style="margin-left:25%">
+    <%= yield %>
+  </div>
 </div>
 </body>
 </html>

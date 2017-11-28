@@ -1,0 +1,28 @@
+<%= form_for :task_filter, url: url do |f| %>
+    <div class="row">
+      <div class="col-md-1"> <%= f.label :priority, (I18n.t 'priority' ) %></div>
+      <div class="col-md-1"><%= f.select :priority_condition, Task::FILTER_CONDITION, class: 'form-control task-filter-condition' %></div>
+      <div class="col-md-1"><%= f.select :priority, Task::PRIORITY_HASH, include_blank: true, class: 'form-control task-filter-elm' %></div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-1"><%= f.label :status, (I18n.t 'status' ), class: 'task-filter-label' %></div>
+      <div class="col-md-1"><%= f.select :status_condition, Task::FILTER_CONDITION, class: 'form-control task-filter-condition' %></div>
+      <div class="col-md-1"><%= f.select :status, Task::STATUS_HASH, include_blank: true, class: 'form-control task-filter-elm' %></div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-1"><%= f.label :tags, (I18n.t 'tags'), class: 'task-filter-label' %></div>
+      <div class="col-md-2"><%= f.text_field :tags, placeholder: 'tag1, tag2, ...', class: 'form-control task-filter-elm' %></div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-1"><%= f.label :sorts, (I18n.t 'sorts'), class: 'task-filter-label' %></div>
+      <div class="col-md-1"><%= f.select :sort_options, Task::SORT_OPTIONS, include_blank: true, class: 'form-control' %></div>
+      <div class="col-md-1"><%= f.select :sort_order, { ASC: 'ASC', DESC: 'DESC' }, class: 'form-control'%></div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-1"><%= f.submit (I18n.t 'filter' ), class: 'btn btn-primary filter-button' %></div>
+    </div>
+<% end %>

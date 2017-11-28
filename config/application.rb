@@ -16,5 +16,6 @@ module TrainingApp2
     # -- all .rb files in that directory are automatically loaded.
     config.active_record.default_timezone = :local
     config.time_zone = 'Tokyo'
+    config.exceptions_app = self.routes
   end
 end

@@ -1,28 +1,28 @@
 <h1>Tasks list </h1>
-<%= render 'tasks/search_form' %>
-<div>
-  <span>Sort by deadline</span>
-  <select size="1" name="links" onchange="window.location.href=this.value;">
-    <% if defined? @sorts[:deadline] && @sorts[:deadline] == 'ASC' %>
-      <option selected = "selected" value="<%= tasks_path(deadline_sort: 'ASC') %>">ASC</option>
-      <option value="<%= tasks_path(deadline_sort: 'DESC') %>">DESC</option>
-    <% else %>
-        <option value="<%= tasks_path(deadline_sort: 'ASC') %>">ASC</option>
-        <option selected = "selected" value="<%= tasks_path(deadline_sort: 'DESC') %>">DESC</option>
-    <% end %>
-  </select>
+<%= render 'shared/task_filter_form', url: tasks_path %>
+<!--<div>-->
+  <!--<span>Sort by deadline</span>-->
+  <!--<select size="1" name="links" onchange="window.location.href=this.value;">-->
+    <!--<% if defined? @sorts[:deadline] && @sorts[:deadline] == 'ASC' %>-->
+      <!--<option selected = "selected" value="<%= tasks_path(deadline_sort: 'ASC') %>">ASC</option>-->
+      <!--<option value="<%= tasks_path(deadline_sort: 'DESC') %>">DESC</option>-->
+    <!--<% else %>-->
+        <!--<option value="<%= tasks_path(deadline_sort: 'ASC') %>">ASC</option>-->
+        <!--<option selected = "selected" value="<%= tasks_path(deadline_sort: 'DESC') %>">DESC</option>-->
+    <!--<% end %>-->
+  <!--</select>-->
 
-  <span>Sort by priority</span>
-    <select size="1" name="links" onchange="window.location.href=this.value;">
-      <% if defined? @sorts[:priority] && @sorts[:priority] == 'ASC' %>
-        <option selected = "selected" value="<%= tasks_path(priority_sort: 'ASC') %>">ASC</option>
-        <option value="<%= tasks_path(priority_sort: 'DESC') %>">DESC</option>
-      <% else %>
-        <option value="<%= tasks_path(priority_sort: 'ASC') %>">ASC</option>
-        <option selected = "selected" value="<%= tasks_path(priority_sort: 'DESC') %>">DESC</option>
-      <% end %>
-    </select>
-</div>
+  <!--<span>Sort by priority</span>-->
+    <!--<select size="1" name="links" onchange="window.location.href=this.value;">-->
+      <!--<% if defined? @sorts[:priority] && @sorts[:priority] == 'ASC' %>-->
+        <!--<option selected = "selected" value="<%= tasks_path(priority_sort: 'ASC') %>">ASC</option>-->
+        <!--<option value="<%= tasks_path(priority_sort: 'DESC') %>">DESC</option>-->
+      <!--<% else %>-->
+        <!--<option value="<%= tasks_path(priority_sort: 'ASC') %>">ASC</option>-->
+        <!--<option selected = "selected" value="<%= tasks_path(priority_sort: 'DESC') %>">DESC</option>-->
+      <!--<% end %>-->
+    <!--</select>-->
+<!--</div>-->
 <% if @tasks.empty? %>
     <p>no tasks found </p>
 <% else %>
@@ -47,4 +47,6 @@
   </table>
 <% end %>
 <%= paginate @tasks %>
-<%= link_to (I18n.t 'create_new_task'), new_task_path %>
+<div>
+  <%= link_to (I18n.t 'create_new_task'), new_task_path, class: 'btn btn-primary' %>
+</div>

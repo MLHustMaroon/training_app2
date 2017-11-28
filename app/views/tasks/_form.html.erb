@@ -1,31 +1,31 @@
 <%= form_for task do |f| %>
     <%= render 'shared/error_messages', object: task %>
-    <div>
-      <%= f.label :content, (I18n.t 'content') %>
-      <%= f.text_area :content, class: 'form-control'%>
+    <div class="row">
+      <div class="col-md-1"><%= f.label :content, (I18n.t 'content') %></div>
+      <div class="col-md-2"><%= f.text_area :content, class: 'form-control'%></div>
     </div>
 
-    <div>
-      <%= f.label :priority, (I18n.t 'priority') %>
-      <%= f.select :priority, Task::PRIORITY_HASH, class: 'form-control' %>
+    <div class="row">
+      <div class="col-md-1"><%= f.label :priority, (I18n.t 'priority') %></div>
+      <div class="col-md-2"><%= f.select :priority, Task::PRIORITY_HASH, class: 'form-control' %></div>
     </div>
 
-    <div>
-      <%= f.label :status, (I18n.t 'status') %>
-      <%= f.select :status, Task::STATUS_HASH, class: 'form-control' %>
+    <div class="row">
+      <div class="col-md-1"><%= f.label :status, (I18n.t 'status') %></div>
+      <div class="col-md-2"><%= f.select :status, Task::STATUS_HASH, class: 'form-control' %></div>
     </div>
 
-    <div>
-      <%= f.label :deadline, (I18n.t 'deadline') %>
-      <%= f.datetime_select :deadline, class: 'form-control' %>
+    <div class="row">
+      <div class="col-md-1"><%= f.label :deadline, (I18n.t 'deadline') %></div>
+      <div class="col-md-11"><%= f.date_select :deadline, {}, class: 'col-sm-1' %></div>
     </div>
 
-    <div>
-      <%= f.label :tags %>
-      <%= f.text_field :tags, value: tags_string(task), html: {placeholder: 'tag1, tag2, ..'} %>
+    <div class="row">
+      <div class="col-md-1"><%= f.label :tags %></div>
+      <div class="col-md-2"><%= f.text_field :tags, value: tags_string(task), html: {placeholder: 'tag1, tag2, ..'} %></div>
     </div>
 
-    <div>
+    <div class="col-md-4">
       <%= f.submit button, class: 'btn btn-primary' %>
     </div>
 <% end %>

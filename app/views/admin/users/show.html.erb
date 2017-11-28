@@ -1,0 +1,7 @@
+<h1><%= @user.name%></h1>
+<ul>
+  <li>Name: <%= @user.name %></li>
+  <li>Email: <%= @user.email %></li>
+  <li>Num of tasks: <%= @user.tasks.count%></li>
+</ul>
+<%= link_to 'Remove this user', admin_user_path(@user), method: 'delete', class: 'btn btn-primary', data: {confirm: (I18n.t 'confirm_delete')} %>
