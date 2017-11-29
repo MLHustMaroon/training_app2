@@ -4,7 +4,7 @@ class User < ApplicationRecord
   attr_accessor :remember_token
 
   #callback functions
-  before_save { self.email = email.downcase }
+  before_save { self.email = self.email.downcase }
 
   #validates
   validates :name, presence: true, length: { minimum: 4, maximum: 255 }

@@ -35,6 +35,7 @@ gem 'jquery-rails'
 gem 'rails-i18n'
 gem 'kaminari'
 gem 'rails4-autocomplete'
+gem 'rubocop', require: false
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
@@ -43,7 +44,13 @@ group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   # Adds support for Capybara system testing and selenium driver
   gem 'capybara', '~> 2.13'
+  gem 'cucumber-rails', :require => false
+  gem 'database_cleaner'
+  gem 'factory_bot_rails'
+  gem 'rails-controller-testing'
+  gem 'rspec-rails'
   gem 'selenium-webdriver'
+  gem 'shoulda-matchers'
 end
 
 group :development do
