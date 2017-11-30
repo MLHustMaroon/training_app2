@@ -38,6 +38,12 @@ gem 'rails4-autocomplete'
 gem 'aasm'
 gem 'carrierwave'
 gem 'mini_magick'
+gem 'unicorn'
+gem 'capistrano'
+gem 'capistrano-rails'
+gem 'capistrano-rbenv'
+gem 'capistrano-bundler'
+gem 'capistrano3-unicorn'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
