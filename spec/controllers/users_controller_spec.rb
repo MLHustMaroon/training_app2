@@ -1,15 +1,13 @@
 RSpec.describe(UsersController, type: :controller) do
   include SessionsHelper
-  def get_user
-    user = FactoryBot.build(:user)
-    user.save ? user : User.find_by(email: user.email)
+  before :all do
+    @user = FactoryBot.create(:user)
   end
   before :each do
-    @user = get_user
+    @user.reload
   end
   after :all do
-    user = get_user
-    user.destroy
+    @user.destroy
   end
 
   context 'get show' do
