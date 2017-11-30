@@ -34,13 +34,13 @@ jobs:
           - vendor/bundle
 
       # Only necessary if app uses webpacker or yarn in some other way
-      - type: cache-restore
-        name: Restore yarn cache
-        key: rails-demo-yarn-{{ checksum "yarn.lock" }}
-
-      - run:
-          name: Yarn Install
-          command: yarn install
+#      - type: cache-restore
+#        name: Restore yarn cache
+#        key: rails-demo-yarn-{{ checksum "yarn.lock" }}
+#
+#      - run:
+#          name: Yarn Install
+#          command: yarn install
 
       # Store yarn / webpacker cache
       - type: cache-save
