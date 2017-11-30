@@ -35,7 +35,7 @@ gem 'jquery-rails'
 gem 'rails-i18n'
 gem 'kaminari'
 gem 'rails4-autocomplete'
-gem 'rubocop', require: false
+gem 'aasm'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 

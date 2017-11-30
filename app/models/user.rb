@@ -1,4 +1,22 @@
 class User < ApplicationRecord
+  include AASM
+
+  aasm do
+    state :sleeping, initial: true
+    state :running, :cleaning
+
+    event :run do
+      transitions from: :sleeping, to: :running
+    end
+
+    event :clean do
+      transitions from: :running, to: :cleaning
+    end
+
+    event :sleep do
+      transitions from: %i[running cleaning], to: :sleeping
+    end
+  end
 
   #attribute accessors
   attr_accessor :remember_token
