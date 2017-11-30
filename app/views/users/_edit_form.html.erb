@@ -6,5 +6,19 @@
     <%= f.label :email %>
     <%= f.email_field :email %>
 
+    <%= f.fields_for :profile  do |form| %>
+        <%= form.label :age %>
+        <%= form.number_field :age %>
+
+        <%= form.label :bio %>
+        <%= form.text_field :bio %>
+
+        <%= form.label :gender %>
+        <%= form.select :gender, Profile::GENDER_HASH %>
+
+        <%= form.label :avatar %>
+        <%= form.file_field :avatar %>
+    <% end %>
+
     <%= f.submit "Update", class: "btn btn-primary" %>
 <% end %>

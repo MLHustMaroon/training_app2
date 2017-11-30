@@ -1,3 +1,8 @@
 <h1>User info</h1>
 <p>Name: <%= @user.name %></p>
-Email: <%= @user.email %>
+<p>Email: <%= @user.email %></p>
+<p>Gender: <%=(@user.profile&.gender) ? Profile::GENDER_HASH.key?(@user.profile.gender) : '' %></p>
+<p>Age: <%= @user.profile ? @user.profile.age : '' %></p>
+<p>Bio: <%= @user.profile ? @user.profile.bio : '' %></p>
+<p>Avatar: <%= image_tag(@user.profile ? @user.profile.avatar : '') %></p>
+<p>Thumb version: <%= image_tag(@user.profile ? @user.profile.avatar.thumb : '') %></p>

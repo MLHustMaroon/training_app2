@@ -26,6 +26,7 @@ class UsersController < ApplicationController
 
   def edit
     @user = User.find params[:id]
+    @user.create_profile unless @user.profile
   end
 
   def update
@@ -47,8 +48,10 @@ class UsersController < ApplicationController
       redirect_to root_path
     end
   end
-  def user_params
-    params.require(:user).permit(:name, :email, :password, :password_confirmation)
-  end
 
+  def user_params
+    params.require(:user).permit(:name, :email, :password,
+                                 :password_confirmation,
+                                 profile_attributes: %i[id age bio gender avatar])
+  end
 end

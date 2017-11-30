@@ -33,6 +33,8 @@ class User < ApplicationRecord
 
   #associations
   has_many :tasks, dependent: :destroy
+  has_one :profile
+  accepts_nested_attributes_for :profile
 
   #third-party functions
   has_secure_password
