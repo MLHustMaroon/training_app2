@@ -1,7 +1,13 @@
 # Load DSL and set up stages
 require "capistrano/setup"
+
 # Include default deployment tasks
-# require "capistrano/deploy"
+require 'capistrano/setup'
+require 'capistrano/deploy'
+require 'capistrano/bundler'
+require 'capistrano/rails/assets'
+require 'capistrano/rails/migrations'
+
 
 # Load the SCM plugin appropriate to your project:
 #
@@ -11,8 +17,8 @@ require "capistrano/setup"
 # require "capistrano/scm/svn"
 # install_plugin Capistrano::SCM::Svn
 # or
-# require "capistrano/scm/git"
-# install_plugin Capistrano::SCM::Git
+require 'capistrano/scm/git'
+install_plugin Capistrano::SCM::Git
 
 # Include tasks from other gems included in your Gemfile
 #
@@ -34,24 +40,4 @@ require "capistrano/setup"
 # require "capistrano/passenger"
 
 # Load custom tasks from `lib/capistrano/tasks` if you have any defined
-# Dir.glob("lib/capistrano/tasks/*.rake").each { |r| import r }
-
-
-require 'capistrano/setup'
-require 'capistrano/deploy'
-require "capistrano/scm/git"
-install_plugin Capistrano::SCM::Git
-require 'capistrano/rbenv'
-
-set :rbenv_type, :user
-set :rbenv_ruby, '2.1.3'
-
-require 'capistrano/rails'
-require 'capistrano/rails/assets'
-require 'capistrano/rails/migrations'
-require 'capistrano/bundler'
-require 'capistrano3/unicorn'
-
-set :linked_files, %w{config/secrets.yml config/database.yml}
-
-Dir.glob('lib/capistrano/tasks/*.rake').each { |r| import r }
+Dir.glob("lib/capistrano/tasks/*.rake").each { |r| import r }

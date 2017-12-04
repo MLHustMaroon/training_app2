@@ -1,8 +1,8 @@
 # config valid for current version and patch releases of Capistrano
-# lock "~> 3.10.0"
-#
-# set :application, "my_app_name"
-# set :repo_url, "git@example.com:me/my_repo.git"
+lock "~> 3.10.0"
+
+set :application, 'training'
+set :repo_url, 'git@github.com:MLHustMaroon/training_app2.git'
 
 # Default branch is :master
 # ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
@@ -21,10 +21,10 @@
 # set :pty, true
 
 # Default value for :linked_files is []
-# append :linked_files, "config/database.yml", "config/secrets.yml"
+# append :linked_files, 'config/database.yml', 'config/secrets.yml'
 
 # Default value for linked_dirs is []
-# append :linked_dirs, "log", "tmp/pids", "tmp/cache", "tmp/sockets", "public/system"
+# append :linked_dirs, 'log', 'tmp/pids', 'tmp/cache', 'tmp/sockets'
 
 # Default value for default_env is {}
 # set :default_env, { path: "/opt/ruby/bin:$PATH" }
@@ -36,63 +36,5 @@
 # set :keep_releases, 5
 
 # Uncomment the following to require manually verifying the host key before first deploy.
-# set :ssh_options, verify_host_key: :secure
-
-
-require "bundler/capistrano"
-require "rvm/capistrano"
-
-server '18.221.84.197/training', :web
-server '18.221.84.197/training', :app
-server '18.221.84.197/training', :db
-server '18.221.84.197/training', primary: true
-
-set :application, 'trainingApp'
-set :user, 'ec2-user'
-set :port, 22
-set :deploy_to, "/var/www/#{application}"
-set :deploy_via, :remote_cache
-set :use_sudo, false
-
-set :scm, 'git'
-set :repository, 'git@github.com:MLHustMaroon/training_app2.git'
-set :branch, 'master'
-
-
-default_run_options[:pty] = true
-ssh_options[:forward_agent] = true
-
-after 'deploy', 'deploy:cleanup' # keep only the last 5 releases
-
-namespace :deploy do
-  %w[start stop restart].each do |command|
-    desc "#{command} unicorn server"
-    task command, roles: :app, except: { no_release: true } do
-      run "/etc/init.d/unicorn_#{application} #{command}"
-    end
-  end
-
-  task :setup_config, roles: :app do
-    sudo "ln -nfs #{current_path}/config/nginx.conf /etc/nginx/sites-enabled/#{application}"
-    sudo "ln -nfs #{current_path}/config/unicorn_init.sh /etc/init.d/unicorn_#{application}"
-    run "mkdir -p #{shared_path}/config"
-    put File.read("config/database.remote.yml"), "#{shared_path}/config/database.yml"
-    puts "Now edit the config files in #{shared_path}."
-  end
-  after 'deploy:setup', 'deploy:setup_config'
-
-  task :symlink_config, roles: :app do
-    run "ln -nfs #{shared_path}/config/database.yml #{release_path}/config/database.yml"
-  end
-  after 'deploy:finalize_update', 'deploy:symlink_config'
-
-  # desc 'Make sure local git is in sync with remote.'
-  # task :check_revision, roles: :web do
-  #   unless `git rev-parse HEAD` == `git rev-parse origin/master`
-  #     puts "WARNING: HEAD is not the same as origin/master"
-  #     puts "Run `git push` to sync changes."
-  #     exit
-  #   end
-  # end
-  # before "deploy", "deploy:check_revision"
-end
+set :ssh_options, verify_host_key: :secure
+puts 'run here'
