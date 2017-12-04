@@ -39,21 +39,60 @@
 # set :ssh_options, verify_host_key: :secure
 
 
-lock '3.10.0'
+require "bundler/capistrano"
+require "rvm/capistrano"
 
-set :application, 'training_app2'
-set :repo_url, 'git@github.com:MLHustMaroon/training_app2.git'
-set :deploy_to, '/var/www/training_app2'
-set :log_level, :debug
+server '18.221.84.197/training', :web
+server '18.221.84.197/training', :app
+server '18.221.84.197/training', :db
+server '18.221.84.197/training', primary: true
 
-set :linked_dirs, %w{bin log tmp/pids tmp/cache tmp/sockets vendor/bundle public/system public/assets}
+set :application, 'trainingApp'
+set :user, 'ec2-user'
+set :port, 22
+set :deploy_to, "/var/www/#{application}"
+set :deploy_via, :remote_cache
+set :use_sudo, false
 
-#set :bundle_env_variables, { nokogiri_use_system_libraries: 1 }
-#set :bundle_env_variables, { ‘NOKOGIRI_USE_SYSTEM_LIBRARIES’ => 1 }
+set :scm, 'git'
+set :repository, 'git@github.com:MLHustMaroon/training_app2.git'
+set :branch, 'master'
+
+
+default_run_options[:pty] = true
+ssh_options[:forward_agent] = true
+
+after 'deploy', 'deploy:cleanup' # keep only the last 5 releases
+
 namespace :deploy do
-  desc 'Restart application'
-  task :restart do
-    invoke 'unicorn:restart'
+  %w[start stop restart].each do |command|
+    desc "#{command} unicorn server"
+    task command, roles: :app, except: { no_release: true } do
+      run "/etc/init.d/unicorn_#{application} #{command}"
+    end
   end
+
+  task :setup_config, roles: :app do
+    sudo "ln -nfs #{current_path}/config/nginx.conf /etc/nginx/sites-enabled/#{application}"
+    sudo "ln -nfs #{current_path}/config/unicorn_init.sh /etc/init.d/unicorn_#{application}"
+    run "mkdir -p #{shared_path}/config"
+    put File.read("config/database.remote.yml"), "#{shared_path}/config/database.yml"
+    puts "Now edit the config files in #{shared_path}."
+  end
+  after 'deploy:setup', 'deploy:setup_config'
+
+  task :symlink_config, roles: :app do
+    run "ln -nfs #{shared_path}/config/database.yml #{release_path}/config/database.yml"
+  end
+  after 'deploy:finalize_update', 'deploy:symlink_config'
+
+  # desc 'Make sure local git is in sync with remote.'
+  # task :check_revision, roles: :web do
+  #   unless `git rev-parse HEAD` == `git rev-parse origin/master`
+  #     puts "WARNING: HEAD is not the same as origin/master"
+  #     puts "Run `git push` to sync changes."
+  #     exit
+  #   end
+  # end
+  # before "deploy", "deploy:check_revision"
 end
-after 'deploy:publishing', 'deploy:restart'

@@ -1,11 +1,6 @@
-root = "/var/www/training_app2"
+root = "/var/www/training_app"
 working_directory root
-pid "#{root}/tmp/pids/unicorn.pid"
-stderr_path "#{root}/log/unicorn.log"
-stdout_path "#{root}/log/unicorn.log"
 
-listen "/tmp/unicorn.sock"
-worker_processes 3
 timeout 30
 
 preload_app true
@@ -23,7 +18,7 @@ before_fork do |server, worker|
 
   # Before forking, kill the master process that belongs to the .oldbin PID.
   # This enables 0 downtime deploys.
-  old_pid = "#{root}/tmp/pids/unicorn.pid.oldbin"
+  old_pid = "#{root}/shared/pids/unicorn.pid.oldbin"
   if File.exists?(old_pid) && server.pid != old_pid
     begin
       Process.kill("QUIT", File.read(old_pid).to_i)
