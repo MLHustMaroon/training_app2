@@ -21,5 +21,9 @@
 /yarn-error.log
 /.idea/*
 /config/database.*
+/config/deploy/*
+/config/secrets.yml
+/config/deploy.rb
+Capfile
 
 .byebug_history
