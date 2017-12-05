@@ -14,14 +14,14 @@ USAGE="Usage: $0 <start|stop|restart|upgrade|rotate|force-stop>"
 
 # app settings
 USER="ec2-user"
-APP_NAME="training_app"
-APP_ROOT="/var/www/training_app"
+APP_NAME="training"
+APP_ROOT="/var/www/training"
 ENV="production"
 
 # environment settings
 PATH="/home/$USER/.rbenv/shims:/home/$USER/.rbenv/bin:$PATH"
-CMD="cd $APP_ROOT && bundle exec unicorn -c config/unicorn/unicorn.rb -E $ENV -D"
-PID="$APP_ROOT/shared/pids/unicorn.pid"
+CMD="cd $APP_ROOT && bundle exec unicorn -c config/unicorn/unicorn.rb -E $ENV -P"
+PID="$APP_ROOT/tmp/pids/unicorn.pid"
 OLD_PID="$PID.oldbin"
 
 # make sure the app exists
