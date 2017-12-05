@@ -1,4 +1,4 @@
-root = "/var/www/training_app"
+root = "/var/www/training/current"
 working_directory root
 
 timeout 30

@@ -42,7 +42,8 @@ after 'deploy', 'deploy:cleanup'
 desc 'symlink unicorn service'
 task :setup_config do
   on release_roles :all do
-    execute :sudo, :ln, "-nfs", "#{deploy_to}/current/config/unicorn/unicorn_init.sh /etc/init.d/unicorn_#{application}"
+    application =  'training'
+    execute :sudo, :ln, "-nfs", "#{current_path}/config/unicorn/unicorn_init.sh /etc/init.d/unicorn_#{application}"
     # run "ln #{deploy_to}/current/config/unicorn/unicorn_init.sh
     #       /etc/init.d/unicorn_#{:application}"
     # sudo "ln -nfs #{current_path}/shared/config/database.yml.example
@@ -50,19 +51,17 @@ task :setup_config do
     # run "ln #{deploy_to}/current/shared/config/database.yml.example
     #   #{current_path}/config/database.yml"
     # run "cd #{deploy_to}/current && rails db:migrate"
-    execute :sudo, :ln, "-nfs", "#{deploy_to}/current/shared/config/database.yml.example
-      #{current_path}/config/database.yml"
-    execute :cd, "#{deploy_to}/current"
-    execute :rails, 'db:migrate'
+    execute :sudo, :ln, "-nfs", "#{release_path}/shared/config/database.yml.example #{release_path}/config/database.yml"
   end
 end
 %w[start stop restart].each do |command|
   desc "#{command} unicorn server"
   task command do
     on primary roles :app do
-      run "/ect/init.d/unicorn_#{application} #{command}"
+      application = 'training'
+      execute :sudo, :service, "unicorn_#{application}", "#{command}"
     end
   end
 end
-after 'deploy:published', 'setup_config'
+before 'deploy:migrate', 'setup_config'
 after 'deploy:published', 'restart'

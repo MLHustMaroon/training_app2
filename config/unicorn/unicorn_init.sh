@@ -20,7 +20,7 @@ ENV="production"
 
 # environment settings
 PATH="/home/$USER/.rbenv/shims:/home/$USER/.rbenv/bin:$PATH"
-CMD="cd $APP_ROOT && bundle exec unicorn -c config/unicorn/unicorn.rb -E $ENV -P"
+CMD="cd $APP_ROOT && bundle exec unicorn -c config/unicorn/unicorn.rb -E $ENV -D"
 PID="$APP_ROOT/tmp/pids/unicorn.pid"
 OLD_PID="$PID.oldbin"
 
