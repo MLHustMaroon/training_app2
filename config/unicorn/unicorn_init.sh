@@ -15,7 +15,7 @@ USAGE="Usage: $0 <start|stop|restart|upgrade|rotate|force-stop>"
 # app settings
 USER="ec2-user"
 APP_NAME="training"
-APP_ROOT="/var/www/training"
+APP_ROOT="/var/www/training/current"
 ENV="production"
 
 # environment settings

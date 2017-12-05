@@ -39,25 +39,30 @@ set :repo_url, 'git@github.com:MLHustMaroon/training_app2.git'
 set :ssh_options, verify_host_key: :secure
 puts 'deploy.rb file'
 after 'deploy', 'deploy:cleanup'
-
-after 'deploy:started', 'deploy:setup_config'
-after 'deploy:started', 'deploy:restart'
-namespace :deploy do
-  desc 'symlink unicorn service'
-  task :setup_config do
-    on primary roles :app do
-      sudo "ln -nfs #{current_path}/config/unicorn/unicorn_init.sh
-            /etc/init.d/unicorn_#{application}"
-      sudo "ln -nfs #{current_path}/shared/config/database.yml.example
-            /#{current_path}/config/database.yml"
-    end
+desc 'symlink unicorn service'
+task :setup_config do
+  on release_roles :all do
+    execute :sudo, :ln, "-nfs", "#{deploy_to}/current/config/unicorn/unicorn_init.sh /etc/init.d/unicorn_#{application}"
+    # run "ln #{deploy_to}/current/config/unicorn/unicorn_init.sh
+    #       /etc/init.d/unicorn_#{:application}"
+    # sudo "ln -nfs #{current_path}/shared/config/database.yml.example
+    #       /#{current_path}/config/database.yml"
+    # run "ln #{deploy_to}/current/shared/config/database.yml.example
+    #   #{current_path}/config/database.yml"
+    # run "cd #{deploy_to}/current && rails db:migrate"
+    execute :sudo, :ln, "-nfs", "#{deploy_to}/current/shared/config/database.yml.example
+      #{current_path}/config/database.yml"
+    execute :cd, "#{deploy_to}/current"
+    execute :rails, 'db:migrate'
   end
-  %w[start stop restart].each do |command|
-    desc "#{command} unicorn server"
-    task command do
-      on primary roles :app do
-        run "/ect/init.d/unicorn_#{application} #{command}"
-      end
+end
+%w[start stop restart].each do |command|
+  desc "#{command} unicorn server"
+  task command do
+    on primary roles :app do
+      run "/ect/init.d/unicorn_#{application} #{command}"
     end
   end
 end
+after 'deploy:published', 'setup_config'
+after 'deploy:published', 'restart'
