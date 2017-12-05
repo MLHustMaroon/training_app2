@@ -1,0 +1,7 @@
+production:
+  adapter: postgresql
+  encoding: unicode
+  database: training_app2
+  pool: 5
+  username: postgres
+  password: 110010

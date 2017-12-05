@@ -59,3 +59,4 @@ server '18.221.84.197',
     auth_methods: %w(publickey)
     # password: "please use keys"
   }
+puts 'production.rb file'

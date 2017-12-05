@@ -37,21 +37,27 @@ set :repo_url, 'git@github.com:MLHustMaroon/training_app2.git'
 
 # Uncomment the following to require manually verifying the host key before first deploy.
 set :ssh_options, verify_host_key: :secure
-puts 'run here'
+puts 'deploy.rb file'
 after 'deploy', 'deploy:cleanup'
 
+after 'deploy:started', 'deploy:setup_config'
+after 'deploy:started', 'deploy:restart'
 namespace :deploy do
-  %w[start stop restart].each do |command|
-    desc "#{command} unicorn server"
-    task command, roles: :app, except: { no_release: true } do
-      run "/ect/init.d/unicorn_#{application} #{command}"
+  desc 'symlink unicorn service'
+  task :setup_config do
+    on primary roles :app do
+      sudo "ln -nfs #{current_path}/config/unicorn/unicorn_init.sh
+            /etc/init.d/unicorn_#{application}"
+      sudo "ln -nfs #{current_path}/shared/config/database.yml.example
+            /#{current_path}/config/database.yml"
     end
   end
-
-  desc 'symlink unicorn service'
-  task :setup_config, roles: :app do
-    sudo "ln -nfs #{current_path}/config/unicorn/unicorn_init.sh
-            /etc/init.d/unicorn_#{application}"
+  %w[start stop restart].each do |command|
+    desc "#{command} unicorn server"
+    task command do
+      on primary roles :app do
+        run "/ect/init.d/unicorn_#{application} #{command}"
+      end
+    end
   end
-  after 'deploy:setup', 'deploy:setup_config'
 end
