@@ -1,4 +1,4 @@
-rails_root = File.expand_path('../../', __FILE__)
+rails_root = '/var/www/training/current'
 rails_env = ENV['RAILS_ENV'] || 'production'
 worker_processes 2
 working_directory rails_root

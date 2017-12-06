@@ -39,6 +39,7 @@ set :repo_url, 'git@github.com:MLHustMaroon/training_app2.git'
 set :ssh_options, verify_host_key: :secure
 puts 'deploy.rb file'
 after 'deploy', 'deploy:cleanup'
+
 desc 'symlink unicorn service'
 task :setup_config do
   on release_roles :all do
@@ -54,6 +55,7 @@ task :setup_config do
     execute :sudo, :ln, "-nfs", "#{release_path}/shared/config/database.yml.example #{release_path}/config/database.yml"
   end
 end
+
 %w[start stop restart].each do |command|
   desc "#{command} unicorn server"
   task command do
@@ -63,5 +65,15 @@ end
     end
   end
 end
+
+desc 'make files legal'
+task :config_files do
+  on release_roles :all do
+    execute :sudo, :chmod, '-R', '777', '/var/www/training/current/config/unicorn/unicorn.rb'
+    execute :sudo, :chmod, '-R', '777', '/var/www/training/current/tmp/*'
+  end
+end
+
 before 'deploy:migrate', 'setup_config'
 after 'deploy:published', 'restart'
+after 'deploy:published', 'config_files'
