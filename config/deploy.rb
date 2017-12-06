@@ -57,7 +57,7 @@ end
 %w[start stop restart].each do |command|
   desc "#{command} unicorn server"
   task command do
-    on primary roles :app do
+    on release_roles :all do
       application = 'training'
       execute :sudo, :service, "unicorn_#{application}", "#{command}"
     end

@@ -1,0 +1,4 @@
+:schedule:
+  mailing_reminder:
+    cron: '0 * * * * *'
+    class: MailingReminder

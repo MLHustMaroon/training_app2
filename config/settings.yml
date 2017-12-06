@@ -1,0 +1,4 @@
+aws:
+  ses:
+    sender: doxuan.thanh@monstar-lab.com
+  region: us-east-1
