@@ -77,6 +77,6 @@ task :config_files do
 end
 
 before 'deploy:migrate', 'setup_config'
-after 'deploy:published', 'stop'
 after 'deploy:published', 'config_files'
-after 'deploy:published', 'start'
+# after 'deploy:published', 'stop'
+# after 'deploy:published', 'start'
