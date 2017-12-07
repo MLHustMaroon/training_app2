@@ -47,6 +47,7 @@ gem 'aws-sdk-rails'
 gem 'sidekiq'
 gem 'sidekiq-scheduler'
 gem 'redis-rails'
+gem 'dotenv-rails'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
