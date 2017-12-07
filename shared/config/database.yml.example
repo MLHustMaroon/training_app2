@@ -1,7 +1,8 @@
 production:
+  host: thanh-dbinstance.cfvzuixylkdn.us-east-2.rds.amazonaws.com
   adapter: postgresql
   encoding: unicode
-  database: training_app2
+  database: training
   pool: 5
-  username: postgres
-  password: 110010
+  username: root
+  password: thanhbk6294
