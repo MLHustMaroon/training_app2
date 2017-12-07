@@ -71,12 +71,12 @@ task :config_files do
   on release_roles :all do
     execute :mkdir, '-p', '/var/www/training/current/tmp/sockets'
     execute :mkdir, '-p', '/var/www/training/current/tmp/pids'
-    execute :sudo, :chmod, '-R', '777', '/var/www/training/current/config/unicorn/unicorn.rb'
+    execute :sudo, :chmod, '-R', '777', '/var/www/training/current/config/unicorn/*'
     execute :sudo, :chmod, '-R', '777', '/var/www/training/current/tmp/*'
   end
 end
 
 before 'deploy:migrate', 'setup_config'
 after 'deploy:published', 'config_files'
-# after 'deploy:published', 'stop'
-# after 'deploy:published', 'start'
+after 'deploy:log_revision', 'stop'
+after 'deploy:log_revision', 'start'
